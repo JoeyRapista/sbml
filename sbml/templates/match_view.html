@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container">
+    <section class="pt-3 mb-3">
+        <div class="card border-primary">
+            <div class="card-header d-flex justify-content-between align-items-center"> 
+                <p>{{match.schedule.strftime('%b')}}-{{match.schedule.day}} | {{match.schedule.strftime('%I')}} : {{match.schedule.strftime('%M')}} {{match.schedule.strftime('%p')}}</p>
+            </div>
+            <div class="card-body">
+              <h4 class="card-title"><h5>{{match.team_a.name}} <strong class="text-primary">{{match.team_a_score}} : {{match.team_b_score}}</strong> {{match.team_b.name}}</h5></h4>
+              <br>
+              <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/{{match_yt_id}}" title="YouTube video" allowfullscreen></iframe>
+            </div> 
+            </div>
+          </div>
+       
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+</div>
+
+{% endblock %}

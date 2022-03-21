@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container"> 
+    <section class="pt-3 mb-3">
+        {% for message in get_flashed_messages() %} 
+        <div class="alert alert-success alert-dismissible fade show "role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button> 
+        </div>
+        {% endfor %} 
+        <div class="d-flex justify-content-between align-items-center pb-2">
+            <h5>Logos</h5> 
+              
+        </div> 
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="input-group mb-3">
+                {{ form.url(class="form-control",  placeholder="cdn url", id="url")}}  
+                {{ form.submit(class="btn btn-primary") }}
+              </div>
+        </form> 
+        <ul class="list-group">
+
+            {% for l in logos %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <img src="{{l.logo_url}}" style="width: auto; height: 50px;"  class="img-fluid  img-thumbnail" alt="{{l.logo_url}}"> 
+            <p>{{l.logo_url}}</p>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#deleteModal{{l.id}}">
+                Delete
+              </button>
+            </li>
+            <div class="modal fade" id="deleteModal{{l.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <p>Are you sure you want to delete? </p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{{url_for('admin_logos_delete', lid=l.id)}}" class="btn btn-danger">Delete</a> 
+                    </div>
+                </div>
+                </div>
+            </div>
+             {% endfor %}
+          </ul>
+
+         
+    </section>
+    
+    </div>
+{% endblock %}

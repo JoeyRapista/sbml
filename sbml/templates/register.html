@@ -1,0 +1,100 @@
+{% extends "register_base.html" %}
+{% block content %}  
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+    <div class="container">
+        <br>
+        <h3 class="text-center text-warning"> 
+            Register your team</h3>
+        <p>
+            Note:
+            <ul>
+                <li> Please read the rules <a href="/rules">here</a></li> 
+                <li> Required 7 players/members in a team</li> 
+                <li> You can't upload your own logo to avoid large system files, because we are only using free hosting service. </li>
+                <li>As an alternative, the mgt provided a collection of small size logos, feel free to choose what you like, and it will only belong to your team once registered. Thank you :)</li>
+            </ul>
+        </p>
+        <section class="pt-2 mb-3">   
+            <form method="POST" class="form-group">
+                {{ form.hidden_tag() }}
+                <div class="row g-3">
+
+                    <div class="col-12 mb-2"> 
+                        <div class="card border-info">
+                            <div class="card-header">Team Details</div>
+                            <div class="card-body">                   
+                                <div class="col-12 mb-2">
+                                    {{ form.logo_url.label(class="form-label") }}
+                                    <div class="input-group mb-3"> 
+                                        {{ form.logo_url(class="form-control", id="logo_url")}}  
+                                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#logosModal">Choose</button>
+                                    </div> 
+                                </div> 
+                                <div class="col-12 mb-2">
+                                    {{ form.team_name.label(class="form-label") }}
+                                    {{ form.team_name(class="form-control",placeholder="e.g. Evos, TNC, Blacklist", id="team_name")}} 
+                                </div>  
+                                <div class="col-12 mb-2">
+                                    {{ form.description.label(class="form-label") }} 
+                                    {{ form.description(class="form-control", placeholder="e.g. 'One Shot! One Kill!', 'We are the team with sad stories'", id="description")}} 
+                                </div>
+                                 
+                            </div>
+                          </div>  
+                    </div>   
+                    {% for pform in form.player %}
+                            <div class="col-12 mb-2"> 
+                                <div class="card border-info">
+                                    <div class="card-header">Player Details</div>
+                                    <div class="card-body">  
+                                        <div class="col-12 mb-2">
+                                            {{ pform.label(class="form-label") }}
+                                            {{ pform(class="form-control") }} 
+                                        </div>   
+                                    </div>
+                                </div>  
+                            </div>  
+                    {% endfor %}
+                <div class="col-12">{{ form.submit(class="col-12 btn btn-primary") }}</div> 
+            </form>
+        </section>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="logosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Available logos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-5">
+                    <div class="col">
+                        {% for logo in logos %}
+                        <img src="{{logo.logo_url}}" alt="" height="100" width=auto, style="padding-right: 3px;padding-bottom: 3px;"  class="img"> 
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button> 
+            </div>
+        </div>
+    </div> 
+</div>  
+    <script type="text/javascript">
+        $(".img").click(function(){
+        $("#logo_url").val($(this).attr('src'));
+        $('#logosModal').modal('hide') ;
+        return false;
+})
+    </script>
+{% endblock %}

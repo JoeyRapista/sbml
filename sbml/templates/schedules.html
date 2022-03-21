@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %} 
+    <div class="container">
+        <section class="pb-5 pt-2 text-center">
+             <h5>Matches</h5> 
+
+             {% for t in season.tournaments %}
+             <div class="table-responsive"> 
+                 <legend>{{t.name}} : {{t.type}}</legend>
+                 <table class="table">
+                     <th>Date</th>
+                     <th> Team A</th> 
+                     <th> Score </th> 
+                     <th> Team B </th>  
+                     <th>Watch</th>
+                     <th>Winner</th> 
+                     <tbody>
+                         {% for m in t.matches %}
+                         <tr>
+                             <td> 
+                                <span class="badge bg-warning">{{m.schedule.strftime('%b')}}-{{m.schedule.day}}</span>
+                                <span class="badge bg-warning">{{m.schedule.strftime('%I')}} : {{m.schedule.strftime('%M')}} {{m.schedule.strftime('%p')}}</span>
+                            </td>
+                             <td> 
+                                {% if m.team_a %}
+                                <img src="{{m.team_a.logo_url}}" style="width: auto; height: 50px;"  class="img-fluid  img-thumbnail" alt="{{m.team_a.logo_url}}"> 
+                                 <a href="{{ url_for('team_view', t_id=m.team_a.id)}}"> {{m.team_a.name}}</a> 
+                                 {% endif %}
+                            </td>  
+                             <td>  
+                                 <span class="badge bg-primary"> {{m.team_a_score}} : {{m.team_b_score}}</span> 
+                                 {% if current_user.is_authenticated %}
+                                    <a href="{{ url_for('match_edit', tid=t.id, mid=m.id, sid=season.id)}}">Edit</a>
+                                 {% endif %}
+                            </td>
+                             <td> 
+                                {% if m.team_b %}
+                                <img src="{{m.team_b.logo_url}}" style="width: auto; height: 50px;"  class="img-fluid  img-thumbnail" alt="{{m.team_b.logo_url}}"> 
+                                <a href="{{ url_for('team_view', t_id=m.team_b.id)}}">{{m.team_b.name}}</a></td>
+                                {% endif %}
+                            <td>
+                                {% if m.yt_id %}
+                                <a class="btn btn-primary" href="{{ url_for('match_view', mid=m.id)}}">Watch</a>
+                                {% endif %}
+                            </td> 
+                            <td>
+                                {% if m.team_winner %}
+                                <a href="{{ url_for('team_view', t_id=m.team_winner.id)}}">{{m.team_winner.name}}</a>
+                                {% endif %} 
+                            </td>  
+                         </tr>
+                         {% endfor %}
+                     </tbody>
+                 </table>
+             </div>
+             {% endfor %}
+          </section> 
+    </div>
+{% endblock %}

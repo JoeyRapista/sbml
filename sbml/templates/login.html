@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %} 
+<br>
+<div class="container">
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-success alert-dismissible fade show "role="alert">{{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    <div class="pb-5 row align-items-center">
+        <div class="col-12 mx-auto">
+            <div class="card shadow border">
+                <div class="card-header"><strong>Login</strong></div>
+                <div class="card-body  flex-column align-items-center">
+
+                    <form method="POST" class="form-group">
+                        {{ form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form.username.label(for=username) }}   
+                                {{ form.username(class="form-control ", id="username", placeholder="Username")}}  
+                            </div> 
+                            <div class="mb-3">
+                                {{ form.password.label(for="password") }}   
+                                {{ form.password(class="form-control", id="password", placeholder="Password")}}   
+                            </div> 
+
+                            <div class="mb-3">
+                                {{ form.submit(class="btn btn-primary") }}
+                            </div> 
+                         
+                      </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

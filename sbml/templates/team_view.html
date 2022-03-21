@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}  
+    <div class="container">
+        <section class="pt-5 mb-3">
+          <img src="{{team.logo_url}}" class="img-fluid" alt="{{team.logo_url}}">
+             <h4 class="text-center"> <strong>{{team.name}} </strong>   </h4>  
+             <p class="text-center lead">Season: {{team.season.name}}</p>
+             <p class="text-center">{{team.description}}</p>
+             <h6 class="text-primary">Players</h6> 
+             <div class="table-responsive">
+                 <table class="table">
+                     <tbody>
+                         <th>Name</th>
+                         <th>IGN</th>
+                         <th>ID</th>
+                         <th>Role</th>
+                         {% for p in team.players %}
+                     <tr>
+                         <td>{{p.full_name}}</td> 
+                         <td>{{p.ml_ign}}</td> 
+                         <td>{{p.ml_id}}</td> 
+                         <td>
+                            {% if p.role == 'MID' %}
+                                <span class="badge bg-info">
+                                    {{p.role}}
+                                </span> 
+                            {% elif p.role == 'GOLD'%}
+                                <span class="badge bg-primary">
+                                    {{p.role}}
+                                </span> 
+                            {% elif p.role == 'EXP'%}
+                                <span class="badge bg-danger">
+                                    {{p.role}}
+                                </span>
+                            {% elif p.role == 'JUNGLE'%}
+                                <span class="badge bg-warning">
+                                    {{p.role}}
+                                </span>
+                            {% elif p.role == 'SUPPORT'%}
+                                <span class="badge bg-success">
+                                    {{p.role}}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary">
+                                    {{p.role}}
+                                </span>
+                            {% endif %} 
+                        </td> 
+                     </tr>
+                     {% endfor %}
+                     </tbody> 
+                 </table>
+             </div>
+          </section> 
+
+          <section class="mb-3">
+            <h6 class="text-primary " >Matches</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <th>Date</th>
+                            <th>Opponent</th>
+                            <th>Result</th>
+                            <th>Phase</th>
+
+                            {% if not matches %}
+                                <h6>No matches available</h6>
+                            {% endif %}
+
+                            {% for m in matches %}
+                            <tr>
+                                <td><span class="badge bg-info">{{m.schedule.strftime('%b')}}-{{m.schedule.day}} | {{m.schedule.strftime('%I')}} : {{m.schedule.strftime('%M')}} {{m.schedule.strftime('%p')}}</span></td>
+                                <td>
+                                    {% if m.team_a != team %}
+                                        <a href="{{ url_for('team_view', t_id=m.team_a.id)}}"> {{m.team_a.name}}</a> 
+                                    {% elif m.team_b != team %}
+                                    <a href="{{ url_for('team_view', t_id=m.team_b.id)}}"> {{m.team_b.name}}</a> 
+
+                                    {% endif %}
+                                </td> 
+                                <td> 
+                                    {% if m.isDone %}
+                                        {% if m.team_winner == team %}
+                                            <span class="badge bg-success">Win</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Loss</span> 
+                                        {% endif %}
+                                    {% else %}
+                                    <span class="badge bg-info">--</span> 
+                                    {% endif %}
+                                </td> 
+                                <td>
+                                    {{m.tournament.name}} 
+                                    {% if m.name %}
+                                        / <span>{{m.name}}</span> 
+                                    {% endif %}
+                                   
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+          </section>
+
+          {% if team.achievements %}
+            <section class="mb-5">
+                <h6 class="text-primary">Achievements</h6>
+                <ul class="list-group">
+
+                {% for a in team.achievements %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h6 class="text-primary"> {{a.place}}</h6>
+                
+                {{a.season.name}}
+                </li>
+                {% endfor %}
+                </ul>
+            </section>
+          {% endif %} 
+    </div> 
+{% endblock %}

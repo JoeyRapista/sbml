@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container"> 
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    <div class="p-3 d-flex justify-content-between align-items-center">
+        <h5 class="text-warning pt-2">{{c_season.name}} matches</h5>   
+        <a href="{{ url_for('admin_dashboard')}}" class="btn btn-primary">Back</a>
+ 
+    </div>
+        {% for t in c_season.tournaments %}
+       
+            <div class="card border-primary mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    {{t.name}}
+                    {% if t.name == 'Regular Season' %}
+                    <a href="{{ url_for('auto_round_robin', sid=c_season.id, tid=t.id)}}" class="btn btn-primary">Automate</a> 
+                    <a href="{{ url_for('match_add', sid=c_season.id, tid=t.id)}}" class="btn btn-primary">Add</a> 
+                    {% else %}
+                    <a href="{{ url_for('match_add', sid=c_season.id, tid=t.id)}}" class="btn btn-primary">Add</a>
+                        {% if t.matches %}
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal1">
+                            Cancel
+                        </button>  
+                        <div class="modal fade" id="cancelModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">You are about to start the Playoffs</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body"> 
+                                    <p>Are you sure you want to delete all matches in playoffs?</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a href="{{ url_for('auto_play_offs_restart', sid=c_season.id, tid=t.id)}}" class="btn btn-danger">Proceed</a> 
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#startModal{{t.id}}">
+                            Start
+                        </button> 
+                        <div class="modal fade" id="startModal{{t.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">You are about to start the Playoffs</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body"> 
+                                    <p>Are you sure you want to start the playoffs?</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a href="{{ url_for('auto_play_offs', sid=c_season.id, tid=t.id)}}" class="btn btn-danger">Proceed</a> 
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                    
+                </div>
+                <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th>Date</th>
+                                <th>Team A</th>
+                                <th>score</th>
+                                <th>Team B</th>
+                                <th>Winner</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for m in t.matches %}
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-info">{{m.schedule.strftime('%b')}}-{{m.schedule.day}} | {{m.schedule.strftime('%I')}} : {{m.schedule.strftime('%M')}} {{m.schedule.strftime('%p')}}</span>
+                                        {% if m.name %}
+                                        <p class="text-muted">{{m.name}}</p>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{m.team_a.name}}</td>
+                                    <td>{{m.team_a_score}} : {{m.team_b_score}} </td>
+                                    <td>{{m.team_b.name}}</td>
+                                    <td>{{m.team_winner.name}}</td>
+                                    <td> 
+                                        
+                                        <div class="dropdown">
+                                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                              Actions
+                                            </a> 
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">  
+                                              <li><a href="{{ url_for('match_edit', tid=t.id, mid=m.id, sid=c_season.id)}}" class="dropdown-item">Edit</a> </li>
+                                             
+                                              <li> 
+                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{m.id}}">
+                                                    Delete
+                                                </button>
+                                              </li>  
+                                            </ul>
+                                          </div> 
+                                    
+                                    
+                                    </td>
+                                </tr>
+ 
+                                <div class="modal fade" id="deleteModal{{m.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        <p>Are you sure you want to delete this match?. </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <a href="{{url_for('match_delete', sid=c_season.id, mid= m.id)}}" class="btn btn-danger">Delete</a> 
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div> 
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                    </div> 
+                </div>  
+             </div>
+       
+        {% endfor %} 
+    <section class="pt-2">
+        <h5>Note:</h5>
+        <ul>
+            <li>Go to <a href="https://challonge.com/tournaments/bracket_generator" target="_blank">Challonge</a> website for assistance.</li>
+            <li>The person who created this app is lazy and bad programmer.</li>
+            <li>In regular season, the automate button is broken, it is highly suggested you manually create each match.</li>
+            <li>In Playoffs, if you press start, it create the number of matches based on the number of teams entered the playoffs.</li>
+            <li>after creating the matches, you are required to manually edit each match because, again, the programmer is LAZY.</li>
+            <li>In Playoffs, if you press cancel, it will delete all the matches in playoffs.</li>
+            <li>In Playoffs, each match should be named "Match {number of match}" e.g. "Match 1, Match 2 etc..."</li>
+        </ul>
+    </section>
+</div> 
+{% endblock %}

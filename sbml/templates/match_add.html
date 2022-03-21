@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container">
+    <section class="pt-2 mb-5">
+        <h5>Add new match for <strong class="text-warning"> {{s_season.name}}/{{s_tournament.name}}</strong></h5>
+        <p>
+            <h6>Note</h6>
+            <ul>
+                <li>In case this is a Tie breaker for playoffs|double elimination|4 teams, please name the match as <strong>'Match 7'</strong>, for 6 teams, <b>'Match 11'</b>  </li>
+                <li>Please dont leave the score field blank, input '0' if no score available, otherwise it will not proceed.</li>
+                <li>By checking the match 'Done', it will show to the public who is the winner of the match, otherwise it will remain hidden. Do not check if no official winner for the match yet. </li> 
+            </ul>
+        </p>
+        <form method="POST" class="form-group">
+            {{ form.hidden_tag() }}
+            <div class="row g-3">
+
+                <div class="col-12">
+                    {{ form.isDone.label(class="form-label") }}
+                    {{ form.isDone(class="form-check-input", id="isDone")}} 
+                </div> 
+                <br>
+                <div class="col-12">
+                    {{ form.name.label(class="form-label") }} 
+                    {{ form.name(class="form-control", id="name")}} 
+                </div>
+                <br>
+                <div class="col-12">
+                    {{ form.schedule.label(class="form-label") }} 
+                    {{ form.schedule(class="form-control", id="schedule", type="datetime-local")}} 
+                </div> 
+                <br>
+                <div class="col-12">
+                    {{ form.yt_link.label(class="form-label") }} 
+                    {{ form.yt_link(class="form-control", id="yt_link")}} 
+                </div>
+                <br>
+                <div class="col-8">
+                    {{ form.team_a.label(class="form-label") }} 
+                    {{ form.team_a(class="form-select", id="team_a")}} 
+                </div> 
+                <br>
+                <div class="col-4">
+                    {{ form.team_a_score.label(class="form-label") }} 
+                    {{ form.team_a_score(class="form-control", type="number", value=0, id="team_a_score")}} 
+                </div> 
+                <br>
+                <div class="col-8">
+                    {{ form.team_b.label(class="form-label") }} 
+                    {{ form.team_b(class="form-select", id="team_b")}} 
+                </div> 
+                <br>
+                <div class="col-4">
+                    {{ form.team_b_score.label(class="form-label") }} 
+                    {{ form.team_b_score(class="form-control", type="number", value=0, id="team_b_score")}} 
+                </div> 
+                <br>
+                
+                <div class="col-12">
+                    {{ form.team_winner.label(class="form-label") }} 
+                    {{ form.team_winner(class="form-select", id="team_winner")}} 
+                </div> 
+            </div>
+            
+            <br/>
+                {{ form.submit(class="btn btn-primary") }}
+                <a href="{{ url_for('season_matches', sid=s_season.id)}}" class="btn btn-warning">Cancel</a>
+          </form>
+    </section> 
+</div>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %} 
+    <div class="container">
+        <br>    
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show "role="alert">{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+        <section class="  mb-5"> 
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <h5>Seasons</h5>
+                <a href="{{ url_for('season_add')}}" class="btn btn-primary">Add</a>
+            </div> 
+            <table class="table">
+                <thead>
+                    <tr>
+                       <th>Season</th> 
+                       <th>Status</th> 
+                       <th>Action</th>  
+                    </tr>
+                </thead>
+                <tbody> 
+                   {% for s in seasons %}
+                    <tr> 
+                        <td>{{s.name}}</td>   
+                        <td>
+                            {% if s.status == 'open' %} 
+                                <span class="badge bg-info">
+                                    <strong>{{s.status}}</strong>
+                                </span> 
+                            {% elif s.status == 'start' %}
+                                <span class="badge bg-success">
+                                    <strong>{{s.status}}</strong>
+                                </span> 
+                            {% elif s.status == 'end' %}
+                                <span class="badge bg-primary">
+                                    <strong>{{s.status}}</strong>
+                                </span> 
+                            {% endif %}
+                            
+                        </td>   
+                        <td>  
+                              <div class="dropdown">
+                                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Actions
+                                </a> 
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"> 
+                                  <li><a href="{{ url_for('season_matches', sid=s.id)}}" class="dropdown-item">Matches</a> </li>
+                                  <li><a href="{{ url_for('season_awards', sid=s.id)}}" class="dropdown-item">Awards</a> </li>
+                                  <li><a href="{{ url_for('season_edit', sid=s.id)}}" class="dropdown-item">Edit</a> </li>
+                                  <li>
+                                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{s.id}}">
+                                        Delete
+                                      </button>
+                                  </li>
+                                </ul>
+                              </div> 
+                        </td>     
+                    </tr>  <!-- Modal -->
+                                <div class="modal fade" id="deleteModal{{s.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        <p>Are you sure you want to delete {{s.name}}? there are {{s.tournaments|count}} tournaments and {{s.teams|count}} teams registered under this season. ALL of these will be deleted. </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <a href="{{url_for('season_delete', sid=s.id)}}" class="btn btn-danger">Delete</a> 
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+             
+          </section> 
+                        
+          <section>
+              <h6 class="text-warning">Note:(season status)</h6>
+              <p>
+                  <ul>
+                      <li> <strong class="text-info">Open:</strong>  Season will accepts entries until max teams. will not display the 'Schedule' and 'Teams' links in the navigation bar. </li>
+                      <li><strong class="text-success">Start:</strong> Season will no longer accept entries, and will show 'Teams' and 'Schedule' links in the navigation bar.</li>
+                      <li><strong class="text-primary">End:</strong> Season will now be visible in history "about/season".</li>
+                  </ul>
+              </p>
+              <h6 class="text-warning">Note: (adding new season)</h6>
+              <p>
+                  <ul>
+                      <li>Previous or other season/s must end before creating a new season.</li>
+                       
+                  </ul>
+              </p>
+          </section> 
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+    </div>
+{% endblock %}

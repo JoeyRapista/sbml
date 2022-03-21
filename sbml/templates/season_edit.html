@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container">
+    <section class="pt-5 mb-3">
+        <h5>Edit Season</h5>   
+        <form method="POST" class="form-group">
+            {{ form.hidden_tag() }}
+            <div class="row g-3">
+                <div class="col-md-12">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control", id="name")}} 
+                </div> 
+                <br>
+                <div class="col-md-12">
+                    {{ form.description.label(class="form-label") }} 
+                    {{ form.description(class="form-control", id="description")}} 
+                </div>
+                <br>
+                <div class="col-md-12">
+                    {{ form.status.label(class="form-label") }} 
+                    {{ form.status(class="form-select", id="status")}} 
+                </div> 
+                <br>
+                <div class="col-8">
+                    {{ form.reg_season_type.label(class="form-label") }} 
+                    {{ form.reg_season_type(class="form-select", id="reg_season_type")}} 
+                </div> 
+                <br>
+                <div class="col-4">
+                    {{ form.reg_season_max.label(class="form-label") }} 
+                    {{ form.reg_season_max(class="form-control", type="number", id="reg_season_max")}} 
+                </div> 
+                <br>
+                <div class="col-8">
+                    {{ form.playoffs_type.label(class="form-label") }} 
+                    {{ form.playoffs_type(class="form-select", id="playoffs_type")}} 
+                </div> 
+                <br>
+                <div class="col-4">
+                    {{ form.playoffs_max.label(class="form-label") }} 
+                    {{ form.playoffs_max(class="form-select", type="number", id="playoffs_max")}} 
+                </div> 
+            </div>
+            
+            <br>
+                {{ form.submit(class="btn btn-primary") }}
+                <a href="{{ url_for('admin_dashboard')}}" class="btn btn-warning">Cancel</a>
+          </form> 
+    </section>
+ 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+{% endblock %}

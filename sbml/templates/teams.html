@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %} 
+    <div class="container">
+        <section class="pt-2 pb-5 text-center">
+             <h5>Teams</h5>
+            <div class="row g-5"> 
+              {% if not season.teams %}
+                <h5>No teams registered for this season</h5>
+              {% endif %}
+              {% for t in season.teams %}
+              <div class="col-sm-4">
+                <div class="card">
+                  <img src="{{t.logo_url}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="{{ url_for('team_view', t_id=t.id)}}">{{t.name}}</a></h5>
+                    <p class="card-text">{{t.description}}</p>
+                  </div>  
+                </div>  
+              </div> 
+              {% endfor %}
+            </div>  
+          </section> 
+    </div>
+{% endblock %}

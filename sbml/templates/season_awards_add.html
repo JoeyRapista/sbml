@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container">
+    <br>
+
+    <section class="p-2 mb-5">   
+        <h5>Add new award for {{s_season.name}}</h5>
+        <form method="POST" class="form-group">
+            {{ form.hidden_tag() }}
+            <div class="row g-3 mb-3">   
+                <div class="col-md-12">
+                    {{ form.team.label(class="form-label") }}
+                    {{ form.team(class="form-select", id="team")}} 
+                </div> 
+                <br>
+                <div class="col-md-12">
+                    {{ form.place.label(class="form-label") }}
+                    {{ form.place(class="form-control", id="place")}} 
+                </div> 
+                <br> 
+            </div>  
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('season_awards', sid=s_season.id)}}" class="btn btn-warning">Cancel</a>
+        </form> 
+    </section>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
+    
+</div>
+{% endblock %}

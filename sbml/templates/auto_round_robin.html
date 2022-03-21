@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %} 
+ <div class="container">
+     <section class="pt-3 mb-5"> 
+        <h5>Auto Round-Robin <span class="text-warning">{{s_season.name}} / {{s_tournament.name}}</span></h5> 
+        <form method="POST" class="form-group">
+            {{ form.hidden_tag() }}
+
+            <div class="col-12">
+                {{ form.start_date.label(class="form-label") }}
+                {{ form.start_date(class="form-control", id="start_date", type="datetime-local")}} 
+            </div> 
+            <br>
+            <div class="col-12">
+                {{ form.match_per_date.label(class="form-label") }} 
+                {{ form.match_per_date(class="form-control", value=2, id="match_per_date")}} 
+            </div>
+            <br>
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('season_matches', sid=s_season.id)}}" class="btn btn-warning">Cancel</a>
+
+        </form>
+     </section>
+
+     <p>
+         <h6>Note</h6>
+         <ul>
+             <li>This is assuming that 1 match will take 1 hour of playing/streaming</li>
+             <li>This will also not skip weekends, but you can modify it later</li>
+         </ul>
+     </p>
+ </div>
+{% endblock %}

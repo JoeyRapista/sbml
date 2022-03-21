@@ -1,0 +1,246 @@
+ 
+            
+            
+            <div class="table-responsive">
+              <table class="table"> 
+                <tbody>  
+                    <tr>
+                      <td> 
+                        {% for m in playoffs_matches %} 
+                          {% if m[1] == 'Match 1' %}
+                            <div class="card border-info mr-3 text-center" style="width: 15rem;"> 
+                              <div class="card-header">{{m[1]}} | {{m[8]}}</div>
+                              <div class="card-body">
+                                <h5 class="card-text">
+                                  <div class="row align-items-center">
+                                    <div class="col">
+                                      {% if m[2] %} 
+                                        <a href="{{ url_for('team_view', t_id=m[2].id)}}">
+                                        <img src="{{m[2].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[2].logo_url}}">
+                                        </a>   
+                                      {% endif %}
+                                    </div>
+                                    <div class="col">
+                                      <strong class="text-primary">{{m[4]}} : {{m[5]}}</strong> 
+                                    </div>
+                                    <div class="col">
+                                      {% if m[3] %} 
+                                        <a href="{{ url_for('team_view', t_id=m[3].id)}}">
+                                          <img src="{{m[3].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[3].logo_url}}">
+                                        </a>   
+                                      {% endif %}
+                                    </div>
+                                  </div> 
+                                </h5>
+                                
+                                {% if m[7]  %}
+                                <div class="col align-item-center"> 
+                                  <a href="{{ url_for('team_view', t_id=m[6].id)}}">
+                                    {{m[6].name}}
+                                  </a> 
+                                  <p class="card-text">Wins!</p>
+                                </div>
+                                {% endif %}
+                                
+                              </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                      </td>
+                      <td> </td>
+                      <td> </td>
+                    </tr>
+                    
+                    <tr>
+                      <td> </td>
+                      <td>
+                        {% for m in playoffs_matches %} 
+                          {% if m[1] == 'Match 3' %}
+                            <div class="card border-info mr-3 text-center" style="width: 15rem;"> 
+                              <div class="card-header">{{m[1]}} | {{m[8]}}</div>
+                              <div class="card-body">
+                                <h5 class="card-text">
+                                  <div class="row align-items-center">
+                                    <div class="col">
+                                      {% if m[2] %} 
+                                        <a href="{{ url_for('team_view', t_id=m[2].id)}}">
+                                          <img src="{{m[2].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[2].logo_url}}">
+                                        </a>   
+                                      {% endif %}
+                                    </div>
+                                    <div class="col">
+                                      <strong class="text-primary">{{m[4]}} : {{m[5]}}</strong> 
+                                    </div>
+                                    <div class="col">
+                                      {% if m[3] %} 
+                                        <a href="{{ url_for('team_view', t_id=m[3].id)}}">
+                                          <img src="{{m[3].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[3].logo_url}}">
+                                        </a>   
+                                      {% endif %}
+                                    </div>
+                                  </div> 
+                                </h5>
+                                
+                                {% if m[7]  %}
+                                <div class="col align-item-center"> 
+                                  <a href="{{ url_for('team_view', t_id=m[6].id)}}">
+                                    {{m[6].name}}
+                                  </a> 
+                                  <p class="card-text">Wins!</p>
+                                </div>
+                                {% endif %}
+                                
+                              </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                      </td>
+                      <td> </td>
+                    </tr>
+
+                    <tr>
+                      <td> </td>
+                      <td> </td>
+                      <td>
+                        {% for m in playoffs_matches %} 
+                          {% if m[1] == 'Match 5' %}
+                            <div class="card border-info mr-3 text-center" style="width: 20rem;"> 
+                              <div class="card-header">Championship | {{m[8]}}</div>
+                              <div class="card-body">
+                                <h5 class="card-text">
+                                  <div class="row align-items-center">
+                                    <div class="col">
+                                      {% if m[2] %} 
+                                      <a href="{{ url_for('team_view', t_id=m[2].id)}}">
+                                        <img src="{{m[2].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[2].logo_url}}">
+                                      </a>   
+                                    {% endif %}
+                                    </div>
+                                    <div class="col">
+                                      <strong class="text-primary">{{m[4]}} : {{m[5]}}</strong> 
+                                    </div>
+                                    <div class="col">
+                                      {% if m[3] %} 
+                                        <a href="{{ url_for('team_view', t_id=m[3].id)}}">
+                                          <img src="{{m[3].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[3].logo_url}}">
+                                        </a>   
+                                      {% endif %}
+                                    </div>
+                                  </div> 
+                                </h5>
+                                
+                                {% if m[7]  %}
+                                <div class="col align-item-center"> 
+                                  <a href="{{ url_for('team_view', t_id=m[6].id)}}">
+                                    <img src="{{m[6].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[6].logo_url}}"> 
+                                  </a> 
+                                  <p class="card-text">Champions!</p>
+                                </div> 
+                                {% endif %}
+                                
+                              </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                      </td>
+                    </tr>
+
+
+                    <tr>
+                      <td> </td>
+                      <td>
+                        {% for m in playoffs_matches %} 
+                        {% if m[1] == 'Match 4' %}
+                          <div class="card border-info mr-3 text-center" style="width: 15rem;"> 
+                            <div class="card-header">{{m[1]}} | {{m[8]}}</div>
+                            <div class="card-body">
+                              <h5 class="card-text">
+                                <div class="row align-items-center">
+                                  <div class="col">
+                                    {% if m[2] %} 
+                                    <a href="{{ url_for('team_view', t_id=m[2].id)}}">
+                                      <img src="{{m[2].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[2].logo_url}}">
+                                    </a>   
+                                  {% endif %}
+                                  </div>
+                                  <div class="col">
+                                    <strong class="text-primary">{{m[4]}} : {{m[5]}}</strong> 
+                                  </div>
+                                  <div class="col">
+                                    {% if m[3] %} 
+                                      <a href="{{ url_for('team_view', t_id=m[3].id)}}">
+                                        <img src="{{m[3].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[3].logo_url}}">
+                                      </a>   
+                                    {% endif %}
+                                  </div>
+                                </div> 
+                              </h5>
+                              
+                              {% if m[7]  %}
+                              <div class="col align-item-center"> 
+                                <a href="{{ url_for('team_view', t_id=m[6].id)}}">
+                                  {{m[6].name}}
+                                </a> 
+                                <p class="card-text">Wins!</p>
+                              </div>
+                              {% endif %}
+                              
+                            </div>
+                          </div>
+                          {% endif %}
+                      {% endfor %}
+                      </td>
+                      <td></td>
+                    </tr>
+
+
+                    <tr>
+                      <td>
+                        {% for m in playoffs_matches %} 
+                          {% if m[1] == 'Match 2' %}
+                            <div class="card border-info mr-3 text-center" style="width: 15rem;"> 
+                              <div class="card-header">{{m[1]}} | {{m[8]}}</div>
+                              <div class="card-body">
+                                <h5 class="card-text">
+                                  <div class="row align-items-center">
+                                    <div class="col">
+                                      {% if m[2] %} 
+                                      <a href="{{ url_for('team_view', t_id=m[2].id)}}">
+                                        <img src="{{m[2].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[2].logo_url}}">
+                                      </a>   
+                                    {% endif %}
+                                    </div>
+                                    <div class="col">
+                                      <strong class="text-primary">{{m[4]}} : {{m[5]}}</strong> 
+                                    </div>
+                                    <div class="col">
+                                      {% if m[3] %} 
+                                        <a href="{{ url_for('team_view', t_id=m[3].id)}}">
+                                          <img src="{{m[3].logo_url}}" style="width: auto; height: 50px;"  class="img-fluid img-thumbnail" alt="{{m[3].logo_url}}">
+                                        </a>   
+                                      {% endif %}
+                                    </div>
+                                  </div> 
+                                </h5>
+                                
+                                {% if m[7]  %}
+                                <div class="col align-item-center"> 
+                                  <a href="{{ url_for('team_view', t_id=m[6].id)}}">
+                                    {{m[6].name}}
+                                  </a> 
+                                  <p class="card-text">Wins!</p>
+                                </div> 
+                                {% endif %}
+                                
+                              </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                      </td>
+                      <td></td>
+                      <td></td>
+                    </tr> 
+
+                </tbody>
+              </table>
+            </div>

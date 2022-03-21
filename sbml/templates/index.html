@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %} 
+    <div class="container">
+        <section class="pt-5 mb-5 text-center">
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-success alert-dismissible fade show "role="alert">{{message}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+            <div><h5> <strong>  MLBB | UNPROFESSIONAL | LEAGUE </strong> </h5></div>
+            <div>
+                <img  class="img-fluid" src="/static/images/logo.png" alt="">
+            </div>
+            {% if season != None %}
+            <div>
+                <h5> <strong><span class="text-warning">{{season.name}}</span> </strong> </h5>
+                <h4>{{season.description}}</h4>
+                {% if season.status == 'open' %}
+                <a href="{{ url_for('register')}}" class="btn btn-warning">Register Now!</a>
+                {% endif %}
+            </div>
+            {% else %}
+            <div>
+              <h5> <strong><span class="text-warning">Season has ended</span> </strong> </h5>
+              <h4>Prepare for the next season!</h4>
+              
+          </div>
+            {% endif %}
+          </section> 
+
+<!-- Main Section Starts --> 
+
+          {% if season != None %} 
+            {% for tr in season.tournaments %}
+              <h5 class="text-warning"><strong>{{tr.name}}: ({{tr.type}})</strong></h5>
+              {% if tr.name == "Regular Season" %}
+                  <section class="pb-5" >
+                    <h5> Standings </h5>
+                    {% if not team_converted %}
+                    <div class="text-center">
+                      <h5>No teams registered yet</h5> 
+                    </div> 
+                    {% else %} 
+                    <table class="table table-hover" >
+                      <thead>
+                        <tr class="text-center"> 
+                          <th scope="col">Team</th> 
+                          <th scope="col">Win/s</th>
+                          <th scope="col">Loss/es</th>  
+                          <th scope="col">Matches</th>  
+                        </tr>
+                      </thead>
+                      <tbody> 
+                        {% for t in team_converted %}
+                        <tr class="align-middle"> 
+                          <td class="text-center"> 
+                            <a href="{{ url_for('team_view', t_id=t[0])}}">
+                              <img src="{{t[4]}}" style="width: auto; height: 50px;"  class="img-fluid  img-thumbnail" alt="{{t[4]}}"> 
+                              <h6 class="align-middle">{{t[1]}}</h6>
+                            </a> 
+                          </td> 
+                          <td class="text-center">{{t[2]}}</td>
+                          <td class="text-center">{{t[3]}}</td> 
+                          <td class="text-center">{{t[5]}}</td> 
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+  
+                    {% endif %}
+                  </section> 
+              {% elif tr.name == "Playoffs" %} 
+              <section class="pb-5">
+                    <h5> Bracket for <strong>top {{tr.participants}}</strong> teams</h5> 
+                    {% if not tr.matches %}
+                      <div class="text-center">
+                        <h5>Playoffs not started yet</h5> 
+                      </div>  
+                    {% else %}
+                      {% if tr.participants == 4 and tr.type=='Single Elimination' %}
+                        {% include "4teams.html"  %} 
+                      {% elif tr.participants == 6 and tr.type=='Single Elimination'%}
+                        {% include "6teams.html" %} 
+                      {% elif tr.participants == 8 and tr.type=='Single Elimination' %}
+                        {% include "8teams.html" %} 
+                      {% elif tr.participants == 4 and tr.type=='Double Elimination'%}
+                        {% include "4teams_double.html" %} 
+                      {% elif tr.participants == 6 and tr.type=='Double Elimination'%}
+                        {% include "6teams_double.html" %} 
+                      {% elif tr.participants == 8 and tr.type=='Double Elimination'%}
+                        {% include "8teams_double.html" %} 
+                      {% endif %} 
+                    {% endif %}  
+              {% endif %}
+            </section>
+            {% endfor %} 
+          {% endif %}
+<!-- End Main Section --> 
+ 
+    </div>
+{% endblock %}

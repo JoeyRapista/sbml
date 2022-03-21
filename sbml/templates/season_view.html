@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %} 
+    <div class="container">
+        <section class="pt-4 mb-3 text-center">
+             <h3 class="text-warning"> <strong>{{s_season.name}}</strong></h3>
+             <h4>{{s_season.description}}</h4>  
+        </section>
+        <h6>Awardees</h6>
+        <section class="mb-3 text-center"> 
+            <ul class="list-group">
+
+                {% for w in s_season.achievers %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <img src="{{w.team.logo_url}}" style="width: auto; height: 50px;"  class="img-fluid  img-thumbnail" alt="{{w.team.logo_url}}"> 
+                  
+                <h4>
+                    <strong>
+                    <a href="{{ url_for('team_view', t_id=w.team.id)}}">{{w.team.name}}</a>
+                    </strong>
+                </h4>
+
+                
+                <h3 class="lead text-primary">{{w.place}}</h3>
+                </li>
+                 {% endfor %}
+              </ul>
+
+        </section>
+
+        <section class="mb-3 text-center">
+            <h4>Teams</h4> 
+             <div class="row g-3">
+                {% for t in s_season.teams %}
+                    <div class="col-sm-4">
+                        <div class="card border-success mb-3">
+                            <div class="card-header">
+                                <strong class="text-primary">
+                                    <a href="{{ url_for('team_view', t_id=t.id)}}"> {{t.name}}</a> 
+                                </strong>
+                            </div>
+                            <div class="card-body">
+                            <h6 class="card-title">Players</h6> 
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <th>Name</th>
+                                        <th>IGN</th>
+                                        <th>ID</th>
+                                        <th>Role</th>
+                                        {% for p in t.players %}
+                                    <tr>
+                                        <td>{{p.full_name}}</td> 
+                                        <td>{{p.ml_ign}}</td> 
+                                        <td>{{p.ml_id}}</td> 
+                                        <td>{{p.role}}</td> 
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody> 
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div> 
+             {% endfor %} 
+             </div> 
+            </section>
+
+        <section class="mb-3 text-center">
+            <h4>Matches</h4>
+            {% for t in s_season.tournaments %}
+            <div class="table-responsive"> 
+                <legend>{{t.name}} : {{t.type}}</legend>
+                <table class="table">
+                    <th>Date</th> 
+                    <th> Team A</th> 
+                    <th> Score </th> 
+                    <th> Team B </th> 
+                    <th>Watch</th> 
+                    <th>Winner</th> 
+                    <tbody>
+                        {% for m in t.matches %}
+                        <tr>
+                            <td><span class="badge bg-info">{{m.schedule.strftime('%b')}}-{{m.schedule.day}} | {{m.schedule.strftime('%I')}} : {{m.schedule.strftime('%M')}} {{m.schedule.strftime('%p')}}</span></td>
+                            <td>{{m.team_a.name}} </td> 
+                            <td><span class="badge bg-primary"> {{m.team_a_score}} : {{m.team_b_score}}</span></td>
+                            <td> {{m.team_b.name}}</td>
+                            <td>
+                                {% if m.yt_id %}
+                                <a class="btn btn-primary" href="{{ url_for('match_view', mid=m.id)}}">Watch</a>
+                                {% endif %}
+                            </td>
+                            <td>{{m.team_winner.name}}</td> 
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+
+        </section>
+
+         
+    </div>
+{% endblock %}
