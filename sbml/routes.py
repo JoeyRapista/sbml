@@ -58,6 +58,7 @@ def admin_rules():
     if form.validate_on_submit(): 
         rules.rules = form.rules.data   
         db.session.add(rules)
+        
         db.session.commit()
         flash('Rules updated')
     form.rules.data = rules.rules

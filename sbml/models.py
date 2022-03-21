@@ -40,7 +40,7 @@ class Sponsor(db.Model):
 
 class Rules(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
-    rules = db.Column(db.String(255)) 
+    rules = db.Column(db.Text()) 
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
         return f'<Rules: {self.rules}>'
