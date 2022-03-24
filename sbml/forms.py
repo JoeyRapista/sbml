@@ -41,16 +41,17 @@ class PlayerForm(FlaskForm):
 	role = SelectField(u'Role', choices=['MID', 'GOLD', 'EXP', 'JUNGLE', 'SUPPORT', 'COACH', 'SPONSOR', 'BENCH', 'WATER BOY', 'WATER GIRL'], validators=[DataRequired()])
 
 class TeamForm(FlaskForm): 
-	team_name = StringField("Team Name", validators=[DataRequired()])
-	logo_url = StringField("Team Logo", validators=[DataRequired()]) 
+	team_name = StringField("Team name", validators=[DataRequired()])
+	logo_url = StringField("Team logo", validators=[DataRequired()]) 
 	description = StringField("Tag line", validators=[DataRequired()], widget=TextArea()) 
+	contact_number = StringField("Contact number", validators=[DataRequired()]) 
 	player = FieldList(FormField(PlayerForm), min_entries=7, max_entries=8)
 	submit = SubmitField("Submit")
 
 class AwardsForm(FlaskForm): 
 	team = SelectField(u'Team A', choices=['Team A', 'Team B', 'Team C'], validators=[DataRequired()])   
 	place = StringField("Place", validators=[DataRequired()])  
-	submit = SubmitField("add award")
+	submit = SubmitField("Add award")
 
 class LogosForm(FlaskForm):   
 	url = StringField("url", validators=[DataRequired()]) 

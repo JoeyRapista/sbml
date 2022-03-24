@@ -604,7 +604,7 @@ def register():
     logos = Logos.query.all()
     previous_season = Season.query.filter(Season.status == 'end').all()
     if form.validate_on_submit(): 
-        team = Team(name=form.team_name.data, logo_url=form.logo_url.data, description=form.description.data, season_id=season.id ) 
+        team = Team(name=form.team_name.data, logo_url=form.logo_url.data, description=form.description.data, contact_number=form.contact_number.data,  season_id=season.id ) 
         for p in form.player:  
                 player = Player(full_name=p.full_name.data, ml_id=p.ml_id.data, ml_ign=p.ml_ign.data, role=p.role.data)
                 db.session.add(player)
