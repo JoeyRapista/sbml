@@ -6,6 +6,31 @@
              <h4 class="text-center"> <strong>{{team.name}} </strong>   </h4>  
              <p class="text-center lead">Season: {{team.season.name}}</p>
              <p class="text-center">{{team.description}}</p>
+             {% if current_user.is_authenticated %}
+             <div class="text-center"> 
+                <h5 class="text-warning">{{team.contact_number}}</h5>
+                <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{team.id}}">Delete this Team</a> 
+
+                <div class="modal fade" id="deleteModal{{team.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <p>Are you sure you want to delete this Team? </p>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <a href="{{ url_for('season_teams_delete', tid=team.id)}}" class="btn btn-danger">Delete</a> 
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+             </div>
+             {% endif %}
              <h6 class="text-primary">Players</h6> 
              <div class="table-responsive">
                  <table class="table">

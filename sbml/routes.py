@@ -94,6 +94,18 @@ def admin_logos_delete(lid):
         return redirect(url_for('admin_logos'))
 
 
+@app.route('/admin/teams/gosdofpplddsDS/delete/<int:tid>')
+@login_required
+def season_teams_delete(tid):
+    team = Team.query.get_or_404(tid)
+    try:
+        db.session.delete(team)
+        db.session.commit()
+        flash("Team deleted")
+        return redirect(url_for('teams'))
+    except:
+        flash("Something wrong happned deleting the record, please try again")
+        return redirect(url_for('teams'))
 
 @app.route('/admin/season/awards/<int:sid>', methods=['GET', 'POST'])
 @login_required
